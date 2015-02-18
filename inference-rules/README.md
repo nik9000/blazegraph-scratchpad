@@ -48,7 +48,6 @@ public class FullerClosure extends FullClosure {
     List<Rule> customRules = new ArrayList<Rule>();
     customRules.addAll(super.getCustomRules(database));
     customRules.add(new RuleRdfs10(database, vocab));
-    System.out.println("*** " + customRules.size() + " CUSTOM RULES");
     return customRules;
   }
 }
