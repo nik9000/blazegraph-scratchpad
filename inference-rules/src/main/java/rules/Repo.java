@@ -11,6 +11,14 @@ import org.openrdf.model.URI;
 import org.openrdf.model.Value;
 import org.openrdf.model.impl.StatementImpl;
 import org.openrdf.model.impl.URIImpl;
+import org.openrdf.query.BindingSet;
+import org.openrdf.query.MalformedQueryException;
+import org.openrdf.query.QueryEvaluationException;
+import org.openrdf.query.QueryLanguage;
+import org.openrdf.query.TupleQuery;
+import org.openrdf.query.TupleQueryResult;
+import org.openrdf.query.Update;
+import org.openrdf.query.UpdateExecutionException;
 import org.openrdf.repository.Repository;
 import org.openrdf.repository.RepositoryConnection;
 import org.openrdf.repository.RepositoryException;
@@ -29,7 +37,6 @@ public class Repo {
 	public static Properties properties() throws IOException {
 		InputStream propertiesStream = Repo.class
 				.getResourceAsStream("/fullclosure.properties");
-		// use one of our pre-propertiesured option-sets or "modes"
 		Properties properties = new Properties();
 		properties.load(propertiesStream);
 		return properties;
@@ -37,12 +44,9 @@ public class Repo {
 
 	public static Repository repo(Properties properties) throws IOException,
 			RepositoryException {
-		// create a backing file for the database
 		File journal = File.createTempFile("bigdata", ".jnl");
 		properties.setProperty(BigdataSail.Options.FILE,
 				journal.getAbsolutePath());
-
-		// instantiate a sail and a Sesame repository
 		BigdataSail sail = new BigdataSail(properties);
 		Repository repo = new BigdataSailRepository(sail);
 		repo.initialize();
@@ -53,14 +57,50 @@ public class Repo {
 		RepositoryConnection cxn = repo.getConnection();
 		cxn.setAutoCommit(false);
 		try {
-			singleStatement(cxn);
+			// singleStatement(cxn);
+			update(cxn);
+			query(cxn);
 			cxn.commit();
 		} catch (Exception ex) {
 			cxn.rollback();
 			throw ex;
 		} finally {
-			// close the repository connection
 			cxn.close();
+		}
+	}
+
+	public static void update(RepositoryConnection cxn)
+			throws RepositoryException, MalformedQueryException,
+			UpdateExecutionException {
+		String insert = "" //
+				+ "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" //
+				+ "PREFIX ex: <http://www.example.org/#>\n" //
+				+ "INSERT {\n" //
+				+ "  ex:book1 rdf:Type ex:Publication .\n" //
+				+ "  ex:book2 rdf:type ex:Article .\n" //
+				+ "  ex:Article rdfs:subClassOf ex:Publication .\n" //
+				+ "  ex:publishes rdfs:range ex:Publication .\n" //
+				+ "  ex:MITPress ex:publishes ex:book3 .\n" //
+				+ "} WHERE {}";
+		Update update = cxn.prepareUpdate(QueryLanguage.SPARQL, insert);
+		update.execute();
+	}
+
+	public static void query(RepositoryConnection cxn)
+			throws RepositoryException, MalformedQueryException,
+			QueryEvaluationException {
+		String queryStr = "" //
+				+ "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" //
+				+ "PREFIX ex: <http://www.example.org/#>\n" //
+				+ "SELECT ?book WHERE {\n" //
+				+ "  ?book rdf:Type ex:Publication.\n" //
+				+ "}";
+		TupleQuery tupleQuery = cxn.prepareTupleQuery(QueryLanguage.SPARQL,
+				queryStr);
+		TupleQueryResult result = tupleQuery.evaluate();
+		while (result.hasNext()) {
+			BindingSet row = result.next();
+			System.out.println(row.toString());
 		}
 	}
 
