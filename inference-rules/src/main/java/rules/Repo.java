@@ -73,15 +73,15 @@ public class Repo {
 			throws RepositoryException, MalformedQueryException,
 			UpdateExecutionException {
 		String insert = "" //
-				+ "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" //
-				+ "PREFIX ex: <http://www.example.org/#>\n" //
-				+ "INSERT {\n" //
-				+ "  ex:book1 rdf:Type ex:Publication .\n" //
-				+ "  ex:book2 rdf:type ex:Article .\n" //
-				+ "  ex:Article rdfs:subClassOf ex:Publication .\n" //
-				+ "  ex:publishes rdfs:range ex:Publication .\n" //
-				+ "  ex:MITPress ex:publishes ex:book3 .\n" //
-				+ "} WHERE {}";
+				+ "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n"
+				+ "PREFIX ex: <http://www.example.org/#>\n                    "
+				+ "INSERT {\n                                                 "
+				+ "  ex:book1 rdf:Type ex:Publication .\n                     "
+				+ "  ex:book2 rdf:type ex:Article .\n                         "
+				+ "  ex:Article rdfs:subClassOf ex:Publication .\n            "
+				+ "  ex:publishes rdfs:range ex:Publication .\n               "
+				+ "  ex:MITPress ex:publishes ex:book3 .\n                    "
+				+ "} WHERE {}                                                 ";
 		Update update = cxn.prepareUpdate(QueryLanguage.SPARQL, insert);
 		update.execute();
 	}
@@ -90,11 +90,11 @@ public class Repo {
 			throws RepositoryException, MalformedQueryException,
 			QueryEvaluationException {
 		String queryStr = "" //
-				+ "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" //
-				+ "PREFIX ex: <http://www.example.org/#>\n" //
-				+ "SELECT ?book WHERE {\n" //
-				+ "  ?book rdf:Type ex:Publication.\n" //
-				+ "}";
+				+ "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n"
+				+ "PREFIX ex: <http://www.example.org/#>\n                    "
+				+ "SELECT ?book WHERE {\n                                     "
+				+ "  ?book rdf:Type ex:Publication.\n                         "
+				+ "}                                                          ";
 		TupleQuery tupleQuery = cxn.prepareTupleQuery(QueryLanguage.SPARQL,
 				queryStr);
 		TupleQueryResult result = tupleQuery.evaluate();
