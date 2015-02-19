@@ -1,6 +1,6 @@
 ## Background
 
-*The following is from [SPARQL 1.1 Entailment Regimes](http://www.w3.org/TR/2009/WD-sparql11-entailment-20091022/#t12), section 1.2.*
+*The following comes from [SPARQL 1.1 Entailment Regimes](http://www.w3.org/TR/2009/WD-sparql11-entailment-20091022/#t12), section 1.2, and [RDF 1.1 Semantics](http://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#patterns-of-rdfs-entailment-informative), section 9.2.1.*
 
 ...consider the following data:
 
@@ -22,13 +22,35 @@ Under both simple entailment and RDF entailment,`ex:book1` is the only answer, b
 
 To derive that `ex:book2` and `ex:book3` are publications, we need a system that supports RDFS entailment, under which a set of RDFS entailment rules is applied to the *explicitly given* data to derive new consequences.
 
-The rule *rdfs9* can be applied to the triples (3) and (2) to derive:
+The rule *rdfs9* states:
+
+> If S contains:
+> 
+> xxx `rdfs:subClassOf` yyy .
+> zzz `rdf:type` xxx .
+>
+> then S RDFS entails recognizing D:
+>
+> zzz `rdf:type` yyy .
+
+This can be applied to the triples (3) and (2) to derive:
 
 ```
 (6) ex:book2 rdf:type ex:Publication
 ```
  
-The rule rdfs3 can be applied to (4) and (5) to derive:
+The rule rdfs3 states:
+
+> If S contains:
+>
+> aaa `rdfs:range` xxx .
+> yyy aaa zzz .
+>
+> then S RDFS entails recognizing D:
+>
+> zzz `rdf:type` xxx .
+
+This can be applied to (4) and (5) to derive:
 
 ```
 (7) ex:book3 rdf:type ex:Publication .
@@ -156,3 +178,4 @@ repo.initialize();
 * http://wiki.bigdata.com/wiki/index.php/InferenceAndTruthMaintenance
 * http://wiki.bigdata.com/wiki/index.php/GettingStarted
 * http://www.w3.org/TR/2009/WD-sparql11-entailment-20091022/
+* http://www.w3.org/TR/2014/REC-rdf11-mt-20140225/
