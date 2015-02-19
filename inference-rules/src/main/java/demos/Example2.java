@@ -1,4 +1,4 @@
-package rules;
+package demos;
 
 import org.openrdf.OpenRDFException;
 import org.openrdf.query.BindingSet;
@@ -8,7 +8,7 @@ import org.openrdf.query.TupleQueryResult;
 import org.openrdf.query.Update;
 import org.openrdf.repository.RepositoryConnection;
 
-public class Example3 implements Example {
+public class Example2 implements Example {
 
 	public void update(RepositoryConnection cxn) throws OpenRDFException {
 		String insert = "" //
@@ -16,8 +16,7 @@ public class Example3 implements Example {
 				+ "INSERT {\n                                                 "
 				+ "  ex:book1 rdf:type ex:Publication .\n                     "
 				+ "  ex:book2 rdf:type ex:Article .\n                         "
-				+ "  ex:Article ex:subClassOf ex:Publication .\n              "
-//				+ "  ex:Article rdfs:subPropertyOf ex:Publication .\n              "
+				+ "  ex:Article rdfs:subClassOf ex:Publication .\n            "
 				+ "  ex:publishes rdfs:range ex:Publication .\n               "
 				+ "  ex:MITPress ex:publishes ex:book3 .\n                    "
 				+ "} WHERE {}                                                 ";

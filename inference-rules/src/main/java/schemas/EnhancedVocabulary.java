@@ -1,17 +1,17 @@
-package rules;
+package schemas;
 
 import org.openrdf.model.impl.URIImpl;
 
 import com.bigdata.rdf.vocab.BaseVocabularyDecl;
 import com.bigdata.rdf.vocab.DefaultBigdataVocabulary;
 
-public class MyVocabularyVersion0 extends DefaultBigdataVocabulary {
+public class EnhancedVocabulary extends DefaultBigdataVocabulary {
 
-	public MyVocabularyVersion0() {
+	public EnhancedVocabulary() {
 		super();
 	}
 
-	public MyVocabularyVersion0(final String namespace) {
+	public EnhancedVocabulary(final String namespace) {
 		super(namespace);
 	}
 

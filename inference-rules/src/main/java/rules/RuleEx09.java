@@ -2,6 +2,8 @@ package rules;
 
 import org.openrdf.model.vocabulary.RDF;
 
+import schemas.EXAMPLE;
+
 import com.bigdata.bop.IConstraint;
 import com.bigdata.bop.constraint.Constraint;
 import com.bigdata.bop.constraint.NE;

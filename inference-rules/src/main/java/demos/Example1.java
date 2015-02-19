@@ -1,4 +1,4 @@
-package rules;
+package demos;
 
 import org.openrdf.OpenRDFException;
 import org.openrdf.model.Resource;
