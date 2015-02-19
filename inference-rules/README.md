@@ -1,4 +1,14 @@
-# Entailment, inference, and truth maintenance
+# Entailment, inference, and truth maintenance in Blazegraph
+
+*February 17, 2015*
+
+There are two general approaches to handling entailments: eagerly computing them as data is inserted, and waiting to derive them until query time.
+
+Eagerly computing inferences has the advantages of front-loading the computation, so that queries can later be planned and run efficiently.  Its drawbacks include the up-front expense of performing this computation, the increased space of storing the inferred triples, and the burden of maintaining truth (i.e. recomputing the inferences) as data changes over time.
+
+Deriving inferences on-demand at query time advoids these drawbacks, but increases query planning complexity and query execution time.
+
+Blazegraph combines the approaches.
 
 ## Background
 
@@ -186,16 +196,6 @@ BigdataSail sail = new BigdataSail(properties);
 Repository repo = new BigdataSailRepository(sail);
 repo.initialize();
 ```
-
-## Blazegraph
-
-The two approaches to handling entailments: eagerly computing them as data is inserted, and waiting to derive them until query time.
-
-Eagerly computing inferences has the advantages of front-loading the computation, so that queries can later be planned and run efficiently.  Its drawbacks include the up-front expense of performing this computation, the increased space of storing the inferred triples, and the burden of maintaining truth (i.e. recomputing the inferences) as data changes over time.
-
-Deriving inferences on-demand at query time advoids these drawbacks, but increases query planning complexity and query execution time.
-
-Blazegraph combines the approaches.
 
 ## References
 
