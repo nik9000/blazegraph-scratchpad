@@ -5,30 +5,73 @@
 
 ## Overview
 
+Define your schema:
+
+```java
+package schemas;
+
+import org.openrdf.model.URI;
+import org.openrdf.model.impl.URIImpl;
+
+public class EXAMPLE {
+
+  public static final String NAMESPACE = "http://www.example.org/#";
+
+  public static final URI SUBCLASSOF = new URIImpl(NAMESPACE + "subClassOf");
+  public static final URI RANGE = new URIImpl(NAMESPACE + "range");
+
+}
+```
+
+Incorporate it into a `Vocabulary`:
+
+```java
+package schemas;
+
+public class ExampleVocabulary extends DefaultBigdataVocabulary {
+
+  public ExampleVocabulary() {
+    super();
+  }
+
+  public ExampleVocabulary(final String namespace) {
+    super(namespace);
+  }
+
+  @Override
+  protected void addValues() {
+    super.addValues();
+    addDecl(new BaseVocabularyDecl(
+        EXAMPLE.SUBCLASSOF,
+        EXAMPLE.RANGE
+    ));
+  }
+}
+```
+
+Add your vocabulary class to your configuration:
+
+*exampleclosure.properties:*
+
+```
+com.bigdata.rdf.store.AbstractTripleStore.vocabularyClass=schemas.ExampleVocabulary
+```
+
 Create a new `Rule`:
 
 ```java
-// http://wiki.bigdata.com/wiki/index.php/InferenceAndTruthMaintenance#Writing_your_own_inference_rules
-// http://www.blazegraph.com/docs/api/index.html?com/bigdata/relation/rule/Rule.html
-public class RuleRdfs10<A> extends Rule<A> {
+package rules;
 
-  private static final long serialVersionUID = -2964784545354974663L;
-
-  public RuleRdfs10(String relationName, Vocabulary vocab) {
-
-    // (?u,rdfs:subClassOf,?u) <= (?u,rdf:type,rdfs:Class)
-    super("rdfs10",//
-        new SPOPredicate(relationName, var("u"),
-            vocab.getConstant(RDFS.SUBCLASSOF), var("u")),//
-        new SPOPredicate[] { new SPOPredicate(relationName, var("u"),
-            vocab.getConstant(RDF.TYPE),
-            vocab.getConstant(RDFS.CLASS)) //
-        },//
-        null // constraints
-    );
-
+public class RuleEx09 extends Rule {
+  public RuleEx09(String relationName, Vocabulary vocab) {
+    super("ex09", new SPOPredicate(relationName, var("v"),
+        vocab.getConstant(RDF.TYPE), var("x")),
+        new SPOPredicate[] {
+            new SPOPredicate(relationName, var("u"), vocab.getConstant(EXAMPLE.SUBCLASSOF), var("x")),
+            new SPOPredicate(relationName, var("v"), vocab.getConstant(RDF.TYPE), var("u"))
+        },
+        new IConstraint[] { Constraint.wrap(new NE(var("u"), var("x"))) });
   }
-
 }
 ```
 
@@ -37,7 +80,7 @@ Create a `FullClosure` that uses your `Rule`:
 ```java
 package rules;
 
-public class FullerClosure extends FullClosure {
+public class ExampleClosure extends FullClosure {
 
   public FullerClosure(AbstractTripleStore db) {
     super(db);
@@ -47,7 +90,7 @@ public class FullerClosure extends FullClosure {
   protected List<Rule> getCustomRules(String database) {
     List<Rule> customRules = new ArrayList<Rule>();
     customRules.addAll(super.getCustomRules(database));
-    customRules.add(new RuleRdfs10(database, vocab));
+    customRules.add(new RuleEx09(database, vocab));
     return customRules;
   }
 }
@@ -55,20 +98,21 @@ public class FullerClosure extends FullClosure {
 
 Add your closure class to your configuration:
 
-*fullfeature.properties:*
+*exampleclosure.properties:*
 
 ```
-com.bigdata.rdf.store.AbstractTripleStore.closureClass=rules.FullerClosure
+com.bigdata.rdf.store.AbstractTripleStore.closureClass=rules.ExampleClosure
 ```
 
 Load up the configuration, and create a new repository instance:
 
 ```java
-Properties properties = ...
-
-File journal = File.createTempFile("bigdata", ".jnl");
-properties.setProperty(BigdataSail.Options.FILE, journal.getAbsolutePath());
-
+File jnl = File.createTempFile("bigdata", ".jnl");
+Properties properties = new Properties();
+String resource = "/exampleclosure.properties";
+InputStream propertiesStream = getClass().getResourceAsStream(resource);
+properties.load(propertiesStream);
+properties.setProperty(BigdataSail.Options.FILE, jnl.getAbsolutePath());
 BigdataSail sail = new BigdataSail(properties);
 Repository repo = new BigdataSailRepository(sail);
 repo.initialize();

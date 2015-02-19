@@ -21,7 +21,7 @@ public class Tests {
 	private RepositoryConnection createRepository() throws Exception {
 		File jnl = File.createTempFile("bigdata", ".jnl");
 		Properties properties = new Properties();
-		String resource = "/fullerclosure.properties";
+		String resource = "/exampleclosure.properties";
 		InputStream propertiesStream = getClass().getResourceAsStream(resource);
 		properties.load(propertiesStream);
 		properties.setProperty(BigdataSail.Options.FILE, jnl.getAbsolutePath());
