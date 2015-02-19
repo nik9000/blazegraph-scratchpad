@@ -22,7 +22,7 @@ public class Example3 implements Example {
 				+ "  ex:book1 rdf:type ex:Publication .\n                     "
 				+ "  ex:book2 rdf:type ex:Article .\n                         "
 				+ "  ex:Article ex:subClassOf ex:Publication .\n              "
-				+ "  ex:publishes rdfs:range ex:Publication .\n               "
+				+ "  ex:publishes ex:range ex:Publication .\n               "
 				+ "  ex:MITPress ex:publishes ex:book3 .\n                    "
 				+ "} WHERE {}                                                 ";
 		Update update = cxn.prepareUpdate(QueryLanguage.SPARQL, insert);

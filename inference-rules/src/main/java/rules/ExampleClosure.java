@@ -17,6 +17,7 @@ public class ExampleClosure extends FullClosure {
 	protected List<Rule> getCustomRules(String database) {
 		List<Rule> customRules = new ArrayList<Rule>();
 		customRules.addAll(super.getCustomRules(database));
+		customRules.add(new RuleEx03(database, vocab));
 		customRules.add(new RuleEx09(database, vocab));
 		return customRules;
 	}

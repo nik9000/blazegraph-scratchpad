@@ -16,6 +16,9 @@ public class ExampleVocabulary extends DefaultBigdataVocabulary {
 	@Override
 	protected void addValues() {
 		super.addValues();
-		addDecl(new BaseVocabularyDecl(EXAMPLE.SUBCLASSOF));
+		addDecl(new BaseVocabularyDecl(
+				EXAMPLE.SUBCLASSOF,
+				EXAMPLE.RANGE
+		));
 	}
 }
