@@ -1,3 +1,4 @@
+package tests;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
@@ -14,11 +15,6 @@ import org.openrdf.repository.RepositoryConnection;
 
 import com.bigdata.rdf.sail.BigdataSail;
 import com.bigdata.rdf.sail.BigdataSailRepository;
-
-import demos.Example;
-import demos.Example1;
-import demos.Example2;
-import demos.Example3;
 
 public class Tests {
 
@@ -37,8 +33,7 @@ public class Tests {
 
 	private Iterator<BindingSet> run(Example example) throws Exception {
 		RepositoryConnection cxn = createRepository();
-		example.update(cxn);
-		Iterator<BindingSet> rows = example.query(cxn).iterator();
+		Iterator<BindingSet> rows = example.run(cxn).iterator();
 		cxn.close();
 		return rows;
 	}

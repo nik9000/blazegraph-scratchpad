@@ -1,4 +1,4 @@
-package demos;
+package tests;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -13,7 +13,9 @@ import org.openrdf.repository.RepositoryConnection;
 
 public class Example3 implements Example {
 
-	public void update(RepositoryConnection cxn) throws OpenRDFException {
+	public Iterable<BindingSet> run(RepositoryConnection cxn)
+			throws OpenRDFException {
+
 		String insert = "" //
 				+ "PREFIX ex: <http://www.example.org/#>\n                    "
 				+ "INSERT {\n                                                 "
@@ -25,9 +27,7 @@ public class Example3 implements Example {
 				+ "} WHERE {}                                                 ";
 		Update update = cxn.prepareUpdate(QueryLanguage.SPARQL, insert);
 		update.execute();
-	}
 
-	public Iterable<BindingSet> query(RepositoryConnection cxn) throws OpenRDFException {
 		String queryStr = "" //
 				+ "PREFIX ex: <http://www.example.org/#>\n                    "
 				+ "SELECT ?book WHERE {\n                                     "

@@ -1,4 +1,4 @@
-package demos;
+package tests;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -18,16 +18,15 @@ import org.openrdf.repository.RepositoryConnection;
 
 public class Example1 implements Example {
 
-	public void update(RepositoryConnection cxn) throws OpenRDFException {
+	public Iterable<BindingSet> run(RepositoryConnection cxn)
+			throws OpenRDFException {
+
 		Resource s = new URIImpl("http://www.bigdata.com/rdf#Mike");
 		URI p = new URIImpl("http://www.bigdata.com/rdf#loves");
 		Value o = new URIImpl("http://www.bigdata.com/rdf#RDF");
 		Statement stmt = new StatementImpl(s, p, o);
 		cxn.add(stmt);
-	}
 
-	public Iterable<BindingSet> query(RepositoryConnection cxn)
-			throws OpenRDFException {
 		String queryStr = "" //
 				+ "PREFIX ex: <http://www.example.org/#>\n                    "
 				+ "SELECT ?who ?whom WHERE {\n                                "
