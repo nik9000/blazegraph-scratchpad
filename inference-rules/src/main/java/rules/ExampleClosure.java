@@ -7,9 +7,9 @@ import com.bigdata.rdf.rules.FullClosure;
 import com.bigdata.rdf.store.AbstractTripleStore;
 import com.bigdata.relation.rule.Rule;
 
-public class FullerClosure extends FullClosure {
+public class ExampleClosure extends FullClosure {
 
-	public FullerClosure(AbstractTripleStore db) {
+	public ExampleClosure(AbstractTripleStore db) {
 		super(db);
 	}
 
