@@ -21,8 +21,8 @@ public class MyVocabularyVersion0 extends DefaultBigdataVocabulary {
 		super.addValues();
 
 		addDecl(new BaseVocabularyDecl( //
-				new URIImpl("http://www.example.org/#"), //
-				new URIImpl("http://www.example.org/#subClassOf") //
+				new URIImpl(EXAMPLE.NAMESPACE),
+				EXAMPLE.SUBCLASSOF
 		));
 
 	}
