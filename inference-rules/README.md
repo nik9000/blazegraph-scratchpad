@@ -22,17 +22,20 @@ Under both simple entailment and RDF entailment,`ex:book1` is the only answer, b
 
 To derive that `ex:book2` and `ex:book3` are publications, we need a system that supports RDFS entailment, under which a set of RDFS entailment rules is applied to the *explicitly given* data to derive new consequences.
 
-The rule *rdfs9* states:
+The rule [*rdfs9*](http://www.w3.org/TR/rdf11-mt/#patterns-of-rdfs-entailment-informative) states:
 
 > If S contains:
 > 
-> xxx `rdfs:subClassOf` yyy .
-> 
-> zzz `rdf:type` xxx .
+> ```
+> xxx rdfs:subClassOf yyy .
+> zzz rdf:type xxx .
+> ```
 >
 > then S RDFS entails recognizing D:
 >
-> zzz `rdf:type` yyy .
+> ```
+> zzz rdf:type yyy .
+> ```
 
 This can be applied to the triples (3) and (2) to derive:
 
@@ -40,17 +43,20 @@ This can be applied to the triples (3) and (2) to derive:
 (6) ex:book2 rdf:type ex:Publication
 ```
  
-The rule rdfs3 states:
+The rule [*rdfs3*](http://www.w3.org/TR/rdf11-mt/#patterns-of-rdfs-entailment-informative) states:
 
 > If S contains:
 >
-> aaa `rdfs:range` xxx .
-> 
+> ```
+> aaa rdfs:range xxx .
 > yyy aaa zzz .
+> ```
 >
 > then S RDFS entails recognizing D:
 >
-> zzz `rdf:type` xxx .
+> ```
+> zzz rdf:type xxx .
+> ```
 
 This can be applied to (4) and (5) to derive:
 
