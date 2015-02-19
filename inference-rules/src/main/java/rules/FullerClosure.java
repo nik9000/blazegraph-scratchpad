@@ -3,8 +3,6 @@ package rules;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openrdf.model.impl.URIImpl;
-
 import com.bigdata.rdf.rules.FullClosure;
 import com.bigdata.rdf.store.AbstractTripleStore;
 import com.bigdata.relation.rule.Rule;
