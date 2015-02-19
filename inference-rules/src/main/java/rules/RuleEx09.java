@@ -23,14 +23,12 @@ import com.bigdata.relation.rule.Rule;
 public class RuleEx09 extends Rule {
 
 	public RuleEx09(String relationName, Vocabulary vocab) {
-
 		super("ex09", new SPOPredicate(relationName, var("v"),
 				vocab.getConstant(RDF.TYPE), var("x")),//
 				new SPOPredicate[] {//
-					new SPOPredicate(relationName, var("u"), vocab.getConstant(EXAMPLE.SUBCLASSOF), var("x")),//
-					new SPOPredicate(relationName, var("v"), vocab.getConstant(RDF.TYPE), var("u")) //
+						new SPOPredicate(relationName, var("u"), vocab.getConstant(EXAMPLE.SUBCLASSOF), var("x")),//
+						new SPOPredicate(relationName, var("v"), vocab.getConstant(RDF.TYPE), var("u")) //
 				}, new IConstraint[] { Constraint.wrap(new NE(var("u"), var("x"))) });
-
 	}
-	
+
 }

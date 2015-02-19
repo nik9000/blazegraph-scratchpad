@@ -1,5 +1,8 @@
 package demos;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import org.openrdf.OpenRDFException;
 import org.openrdf.query.BindingSet;
 import org.openrdf.query.QueryLanguage;
@@ -17,7 +20,6 @@ public class Example3 implements Example {
 				+ "  ex:book1 rdf:type ex:Publication .\n                     "
 				+ "  ex:book2 rdf:type ex:Article .\n                         "
 				+ "  ex:Article ex:subClassOf ex:Publication .\n              "
-//				+ "  ex:Article rdfs:subPropertyOf ex:Publication .\n              "
 				+ "  ex:publishes rdfs:range ex:Publication .\n               "
 				+ "  ex:MITPress ex:publishes ex:book3 .\n                    "
 				+ "} WHERE {}                                                 ";
@@ -25,7 +27,7 @@ public class Example3 implements Example {
 		update.execute();
 	}
 
-	public void query(RepositoryConnection cxn) throws OpenRDFException {
+	public Iterable<BindingSet> query(RepositoryConnection cxn) throws OpenRDFException {
 		String queryStr = "" //
 				+ "PREFIX ex: <http://www.example.org/#>\n                    "
 				+ "SELECT ?book WHERE {\n                                     "
@@ -34,10 +36,11 @@ public class Example3 implements Example {
 		TupleQuery tupleQuery = cxn.prepareTupleQuery(QueryLanguage.SPARQL,
 				queryStr);
 		TupleQueryResult result = tupleQuery.evaluate();
+		List<BindingSet> rows = new LinkedList<BindingSet>();
 		while (result.hasNext()) {
-			BindingSet row = result.next();
-			System.out.println(row.toString());
+			rows.add(result.next());
 		}
+		return rows;
 	}
 
 }

@@ -1,5 +1,8 @@
 package demos;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import org.openrdf.OpenRDFException;
 import org.openrdf.model.Resource;
 import org.openrdf.model.Statement;
@@ -15,7 +18,16 @@ import org.openrdf.repository.RepositoryConnection;
 
 public class Example1 implements Example {
 
-	public void query(RepositoryConnection cxn) throws OpenRDFException {
+	public void update(RepositoryConnection cxn) throws OpenRDFException {
+		Resource s = new URIImpl("http://www.bigdata.com/rdf#Mike");
+		URI p = new URIImpl("http://www.bigdata.com/rdf#loves");
+		Value o = new URIImpl("http://www.bigdata.com/rdf#RDF");
+		Statement stmt = new StatementImpl(s, p, o);
+		cxn.add(stmt);
+	}
+
+	public Iterable<BindingSet> query(RepositoryConnection cxn)
+			throws OpenRDFException {
 		String queryStr = "" //
 				+ "PREFIX ex: <http://www.example.org/#>\n                    "
 				+ "SELECT ?who ?whom WHERE {\n                                "
@@ -24,18 +36,11 @@ public class Example1 implements Example {
 		TupleQuery tupleQuery = cxn.prepareTupleQuery(QueryLanguage.SPARQL,
 				queryStr);
 		TupleQueryResult result = tupleQuery.evaluate();
+		List<BindingSet> rows = new LinkedList<BindingSet>();
 		while (result.hasNext()) {
-			BindingSet row = result.next();
-			System.out.println(row.toString());
+			rows.add(result.next());
 		}
-	}
-
-	public void update(RepositoryConnection cxn) throws OpenRDFException {
-		Resource s = new URIImpl("http://www.bigdata.com/rdf#Mike");
-		URI p = new URIImpl("http://www.bigdata.com/rdf#loves");
-		Value o = new URIImpl("http://www.bigdata.com/rdf#RDF");
-		Statement stmt = new StatementImpl(s, p, o);
-		cxn.add(stmt);
+		return rows;
 	}
 
 }
