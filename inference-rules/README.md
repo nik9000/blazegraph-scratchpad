@@ -1,6 +1,6 @@
 ## Background
 
-*The following comes from [SPARQL 1.1 Entailment Regimes](http://www.w3.org/TR/2009/WD-sparql11-entailment-20091022/#t12), section 1.2, and [RDF 1.1 Semantics](http://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#patterns-of-rdfs-entailment-informative), section 9.2.1.*
+*The following comes from [SPARQL 1.1 Entailment Regimes](http://www.w3.org/TR/2009/WD-sparql11-entailment-20091022/#t12) and [RDF 1.1 Semantics](http://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#patterns-of-rdfs-entailment-informative).*
 
 ...consider the following data:
 
@@ -27,6 +27,7 @@ The rule *rdfs9* states:
 > If S contains:
 > 
 > xxx `rdfs:subClassOf` yyy .
+> 
 > zzz `rdf:type` xxx .
 >
 > then S RDFS entails recognizing D:
@@ -44,6 +45,7 @@ The rule rdfs3 states:
 > If S contains:
 >
 > aaa `rdfs:range` xxx .
+> 
 > yyy aaa zzz .
 >
 > then S RDFS entails recognizing D:
