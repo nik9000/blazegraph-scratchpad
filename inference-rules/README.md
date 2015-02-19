@@ -3,7 +3,7 @@
 * http://wiki.bigdata.com/wiki/index.php/InferenceAndTruthMaintenance
 * http://wiki.bigdata.com/wiki/index.php/GettingStarted
 
-## Overview
+## Walkthrough
 
 Define your schema:
 
