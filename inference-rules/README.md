@@ -82,7 +82,9 @@ The triples (6) and (7) can then be used to find that *ex:book2* and *ex:book3* 
 
 ## Walkthrough
 
-Define your schema:
+Let's write our own schema, *http://www.example.org/#*, that includes `subClassOf` and `range`.  These shall mimic the semantics of their RDFS counterparts, [`rdfs:subClassOf`](http://www.w3.org/TR/rdf-schema/#ch_subclassof) and [`rdfs:range`](http://www.w3.org/TR/rdf-schema/#ch_range).
+
+First, we write the Java version of our schema:
 
 ```java
 package schemas;
@@ -100,7 +102,7 @@ public class EXAMPLE {
 }
 ```
 
-Incorporate it into a `Vocabulary`:
+We need to incorporate it into a `Vocabulary`, so that various [internal runtime references](http://www.blazegraph.com/docs/api/com/bigdata/rdf/internal/impl/uri/VocabURIShortIV.html) can be computed:
 
 ```java
 package schemas;
@@ -126,7 +128,7 @@ public class ExampleVocabulary extends DefaultBigdataVocabulary {
 }
 ```
 
-Add your vocabulary class to your configuration:
+To let Blazegraph know about this vocabulary, we add it to our [configuration file](http://wiki.bigdata.com/wiki/index.php/GettingStarted#Ok.2C_I.E2.80.99ve_picked_the_bigdata_configuration_setting_I_want_to_work_with._Help_me_write_some_code.):
 
 *exampleclosure.properties:*
 
@@ -134,7 +136,7 @@ Add your vocabulary class to your configuration:
 com.bigdata.rdf.store.AbstractTripleStore.vocabularyClass=schemas.ExampleVocabulary
 ```
 
-Create a new `Rule`:
+Now we can write a `Rule` (that looks suspiciously similar to [`RuleRdfs09`](http://www.blazegraph.com/docs/api/com/bigdata/rdf/rules/RuleRdfs09.html)):
 
 ```java
 package rules;
@@ -152,7 +154,7 @@ public class RuleEx09 extends Rule {
 }
 ```
 
-Create a `FullClosure` that uses your `Rule`:
+We include this rule in our own `FullClosure` implementation:
 
 ```java
 package rules;
@@ -173,7 +175,7 @@ public class ExampleClosure extends FullClosure {
 }
 ```
 
-Add your closure class to your configuration:
+And we tell Blazegraph to use `ExampleClosure` via our configuration file:
 
 *exampleclosure.properties:*
 
@@ -181,7 +183,7 @@ Add your closure class to your configuration:
 com.bigdata.rdf.store.AbstractTripleStore.closureClass=rules.ExampleClosure
 ```
 
-Load up the configuration, and create a new repository instance:
+Finally, we can load up the configuration and create a new repository instance:
 
 ```java
 Properties properties = new Properties();
