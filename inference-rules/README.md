@@ -1,4 +1,4 @@
-# Entailment, inference, and truth maintenance in Blazegraph
+# Entailment, inference, and truth in Blazegraph
 
 *February 17, 2015*
 
