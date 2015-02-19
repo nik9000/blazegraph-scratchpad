@@ -19,15 +19,18 @@ import com.bigdata.rdf.sail.BigdataSailRepository;
 public class Tests {
 
 	private RepositoryConnection createRepository() throws Exception {
-		File jnl = File.createTempFile("bigdata", ".jnl");
 		Properties properties = new Properties();
 		String resource = "/exampleclosure.properties";
 		InputStream propertiesStream = getClass().getResourceAsStream(resource);
 		properties.load(propertiesStream);
+
+		File jnl = File.createTempFile("bigdata", ".jnl");
 		properties.setProperty(BigdataSail.Options.FILE, jnl.getAbsolutePath());
+
 		BigdataSail sail = new BigdataSail(properties);
 		Repository repo = new BigdataSailRepository(sail);
 		repo.initialize();
+
 		return repo.getConnection();
 	}
 
