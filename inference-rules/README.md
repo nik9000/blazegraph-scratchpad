@@ -10,6 +10,28 @@ Deriving inferences on-demand at query time advoids these drawbacks, but increas
 
 Blazegraph combines the approaches.
 
+## Usage
+
+The code in this project is for fiddling.  Run it with Maven:
+
+```
+$ mvn test
+
+...
+
+Results :
+
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 7.157 s
+[INFO] Finished at: 2015-02-19T14:55:01-08:00
+[INFO] Final Memory: 11M/217M
+[INFO] ------------------------------------------------------------------------
+```
+
 ## Background
 
 Consider the following triples:
