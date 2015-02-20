@@ -41,7 +41,7 @@ Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 
 ## Overview
 
-To get a [SAIL](https://github.com/tinkerpop/blueprints/blob/master/doc/Sail-Implementation.textile connection to Blazegraph:
+To get a [SAIL](https://github.com/tinkerpop/blueprints/blob/master/doc/Sail-Implementation.textile) connection to Blazegraph:
 
 ```java
 Repository repo = BigdataSailFactory.connect("localhost", 9999);
