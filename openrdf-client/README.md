@@ -38,3 +38,53 @@ Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 [INFO] Final Memory: 20M/218M
 [INFO] ------------------------------------------------------------------------
 ```
+
+## Overview
+
+To get a [SAIL](https://github.com/tinkerpop/blueprints/blob/master/doc/Sail-Implementation.textile connection to Blazegraph:
+
+```java
+Repository repo = BigdataSailFactory.connect("localhost", 9999);
+RepositoryConnection con = LocalConnection.get();
+```
+
+### Insert
+
+One way to insert a small volume of data is by streaming it in from a file:
+
+```java
+FileInputStream fis = new FileInputStream(LocalDump.file());
+GZIPInputStream gis = new GZIPInputStream(fis);
+con.add(gis, null, RDFFormat.N3);
+```
+
+To insert big volumes of data without blowing the heap, tell Blazegraph to load it:
+
+```java
+String query = "LOAD <file://" + LocalDump.path() + ">";
+Update update = con.prepareUpdate(QueryLanguage.SPARQL, query);
+update.execute();
+```
+
+### Search
+
+To perform a SPARQL query:
+
+```java
+String queryS =
+     "SELECT ?place ?capital WHERE { "
+   + "  ?place <http://www.wikidata.org/entity/P36s> ?capital. "
+   + "}";
+
+TupleQuery query = con.prepareTupleQuery(QueryLanguage.SPARQL, queryS);
+TupleQueryResult rows = query.evaluate();
+```
+
+And iterate over the resulting `rows`.
+
+## References
+
+* [Sesame docs](http://rdf4j.org/documentation.docbook?view)
+* [Sesame API guide](http://rdf4j.org/sesame/2.8/docs/programming.docbook?view)
+* [Sesame 2.8 Javadoc](http://rdf4j.org/sesame/2.8/apidocs/)
+* [Blazegraph 1.4.0 Javadoc](http://www.blazegraph.com/docs/api/index.html)
