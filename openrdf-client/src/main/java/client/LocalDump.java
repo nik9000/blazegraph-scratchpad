@@ -5,9 +5,13 @@ import java.net.URL;
 
 public class LocalDump {
 
-	public static File get() {
-		URL url = LocalDump.class.getClassLoader().getResource(
-				"wikidata-statements_head-100k.nt.gz");
+	public static String path() {
+		return file().getAbsolutePath();
+	}
+
+	public static File file() {
+		String filename = "wikidata-statements_head-10k.nt.gz";
+		URL url = LocalDump.class.getClassLoader().getResource(filename);
 		return new File(url.getFile());
 	}
 

@@ -1,6 +1,8 @@
-## About
+# OpenRDF Java client for Blazegraph
 
-This is a scratch project to play around with Blazegraph's [Sesame](http://rdf4j.org/) client.
+*February 17, 2015*
+
+This is a toy project to play around with Blazegraph's [Sesame](http://rdf4j.org/) client library.
 
 ## Getting started
 
@@ -19,10 +21,22 @@ ant start-blazegraph
 
 ## Running the client
 
-The easiest way to run the client is to load it as a Maven project in Eclipse and run its various `main()` classes directly.
-
-If the command line is your bag, use Maven:
+The client code runs as JUnit test(s).  Run it with Maven:
 
 ```
-mvn exec:java -Dexec.mainClass="client.UpdateViaLoad"
+$ mvn test
+
+...
+
+Results :
+
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 4.245 s
+[INFO] Finished at: 2015-02-19T16:31:23-08:00
+[INFO] Final Memory: 20M/218M
+[INFO] ------------------------------------------------------------------------
 ```
