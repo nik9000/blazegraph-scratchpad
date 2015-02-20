@@ -1,7 +1,5 @@
 # Entailment, inference, and truth in Blazegraph
 
-*February 17, 2015*
-
 There are two general approaches to handling entailments: eagerly computing them as data is inserted, and waiting to derive them until query time.
 
 Eagerly computing inferences has the advantages of front-loading the computation, so that queries can later be planned and run efficiently.  Its drawbacks include the up-front expense of performing this computation, the increased space of storing the inferred triples, and the burden of maintaining truth (i.e. recomputing the inferences) as data changes over time.

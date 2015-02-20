@@ -1,7 +1,5 @@
 # OpenRDF Java client for Blazegraph
 
-*February 17, 2015*
-
 This is a toy project to play around with Blazegraph's [Sesame](http://rdf4j.org/) client library.
 
 ## Getting started
