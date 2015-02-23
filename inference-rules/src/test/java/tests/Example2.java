@@ -1,5 +1,9 @@
 package tests;
 
+import static org.hamcrest.Matchers.hasToString;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -11,8 +15,9 @@ import org.openrdf.query.TupleQueryResult;
 import org.openrdf.query.Update;
 import org.openrdf.repository.RepositoryConnection;
 
-public class Example2 implements Example {
+import com.google.common.collect.PeekingIterator;
 
+public class Example2 implements Example {
 	public Iterable<BindingSet> run(RepositoryConnection cxn)
 			throws OpenRDFException {
 
@@ -43,4 +48,10 @@ public class Example2 implements Example {
 		return rows;
 	}
 
+	public void check(PeekingIterator<BindingSet> rows) {
+		assertThat(rows.next().getValue("book"), hasToString("http://www.example.org/#book1"));
+		assertThat(rows.next().getValue("book"), hasToString("http://www.example.org/#book2"));
+		assertThat(rows.next().getValue("book"), hasToString("http://www.example.org/#book3"));
+		assertFalse(rows.hasNext());
+	}
 }
