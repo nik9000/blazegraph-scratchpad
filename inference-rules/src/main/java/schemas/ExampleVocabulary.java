@@ -17,8 +17,10 @@ public class ExampleVocabulary extends DefaultBigdataVocabulary {
 	protected void addValues() {
 		super.addValues();
 		addDecl(new BaseVocabularyDecl(
-				EXAMPLE.SUBCLASSOF,
-				EXAMPLE.RANGE
+				Inference.SUBCLASSOF,
+				Inference.RANGE,
+				Rewrite.SUBCLASSOF,
+				Rewrite.RANGE
 		));
 	}
 }
